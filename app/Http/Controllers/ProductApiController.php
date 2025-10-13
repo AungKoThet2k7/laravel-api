@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isNull;
 
@@ -36,10 +37,12 @@ class ProductApiController extends Controller
             'photos' => 'required',
             'photos.*' => 'image|mimes:jpeg,png,jpg|max:512'
         ]);
+
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'stock' => $request->stock,
+            'user_id' => Auth::id()
         ]);
 
         $photos = [];

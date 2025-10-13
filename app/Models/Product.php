@@ -12,7 +12,8 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
-        'stock'
+        'stock',
+        'user_id'
     ];
 
     protected $with = [
