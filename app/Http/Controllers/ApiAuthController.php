@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,8 @@ class ApiAuthController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $token = Auth::user()->createToken('phone')->plainTextToken;
             return response()->json([
-                "token" => $token
+                "token" => $token,
+                "user" => new UserResource(Auth::user())
             ]);
         }
 
@@ -43,9 +45,10 @@ class ApiAuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            $token = Auth::user()->createToken('phone')->plainTextToken;
+            $token = Auth::user()->createToken('auth_token')->plainTextToken;
             return response()->json([
-                "token" => $token
+                "token" => $token,
+                "user" => new UserResource(Auth::user())
             ]);
         }
 
@@ -55,7 +58,7 @@ class ApiAuthController extends Controller
     public function logout()
     {
         Auth::user()->currentAccessToken()->delete();
-        return response()->json(["message" => "Logout Success"], 204);
+        return response()->json(["message" => "Logout Success", "success" => true]);
     }
 
     public function logoutAll()

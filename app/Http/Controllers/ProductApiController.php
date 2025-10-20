@@ -58,7 +58,10 @@ class ProductApiController extends Controller
 
         $product->photos()->saveMany($photos);
 
-        return response()->json($product, 201);
+        return response()->json([
+            "message" => "Product is Created",
+            "product" => new ProductResource($product)
+        ], 201);
     }
 
     /**
