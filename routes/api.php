@@ -21,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::get('/v1', function () {
+    return response()->json([
+        'message' => 'Laravel Test API',
+        'version' => '1.0.0',
+    ]);
+});
 Route::prefix('v1')->group(function () {
     Route::post('register', [ApiAuthController::class, 'register'])->name('api.register');
     Route::post('login', [ApiAuthController::class, 'login'])->name('api.login');

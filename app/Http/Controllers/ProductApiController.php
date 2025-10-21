@@ -19,7 +19,21 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-        $products = Product::latest('id')->paginate(10);
+        // $products = Product::latest('id')->paginate(10);
+
+        $sortBy = request('sort-by', 'id');
+        $sortDirection = request('sort-direction', 'desc');
+        $pageLimit = request('limit', 10);
+
+        $products = Product::when(request('search'), function ($q) {
+            $q->where('name', 'like', '%' . request('search') . '%');
+        })->orderBy($sortBy, $sortDirection)->paginate($pageLimit)->appends([
+            'search' => request('search'),
+            'sort-by' => $sortBy,
+            'sort-direction' => $sortDirection,
+            'limit' => $pageLimit,
+        ]);
+
         // return response()->json($products);
         return ProductResource::collection($products);
     }
