@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/v1', function () {
     return response()->json([
         'message' => 'Laravel Test API',
-        'version' => '1.0.0',
+        'version' => '1.0',
     ]);
 });
 Route::prefix('v1')->group(function () {

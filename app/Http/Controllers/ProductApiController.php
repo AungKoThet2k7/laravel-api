@@ -46,6 +46,7 @@ class ProductApiController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
             "name" => "required|min:3|max:50",
             "price" => "required|numeric|min:1",
@@ -139,11 +140,12 @@ class ProductApiController extends Controller
      */
     public function destroy($id)
     {
+        // return $id;
         $product = Product::find($id);
         if (is_null($product)) {
             return response()->json(['message' => 'Product is Not Found'], 404);
         }
         $product->delete();
-        return response()->json(['message' => 'Product is Deleted'], 204);
+        return response()->json(['message' => 'Product is Deleted']);
     }
 }
